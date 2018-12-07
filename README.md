@@ -15,9 +15,10 @@ Ganache
 
 ### Installing
 
-Go into the client directory from the IPFS_DAPP directory
+After cloning repository, go into the client directory from the IPFS_DAPP directory
 
 ```
+git clone https://github.com/lukzhang/DAPP_IPFS_FileSharing.git
 cd IPFS_DAPP
 cd client
 ```
