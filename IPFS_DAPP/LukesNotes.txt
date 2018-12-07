@@ -1,0 +1,12 @@
+Install Python that is version 2, not version 3
+get node-gyp
+Run cmd as Admin and install --global --production windows-build-tools
+
+Install react????
+
+
+
+Windows seems to want to use truffle.js to specify network, rather than truffle-config.js. I used both
+
+
+package.json is in client folder. Used for npm run start
