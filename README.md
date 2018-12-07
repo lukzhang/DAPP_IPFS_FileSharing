@@ -19,6 +19,7 @@ After cloning repository, go into the client directory from the IPFS_DAPP direct
 
 ```
 git clone https://github.com/lukzhang/DAPP_IPFS_FileSharing.git
+cd DAPP_IPFS_FileSharing
 cd IPFS_DAPP
 cd client
 ```
