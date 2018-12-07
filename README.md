@@ -5,8 +5,11 @@ Work in progress. DAPP uses IPFS for each account to store each file as an array
 ### Prerequisites
 
 npm
+
 Truffle
+
 MetaMask
+
 Ganache
 
 
