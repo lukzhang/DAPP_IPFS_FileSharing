@@ -12,6 +12,8 @@ MetaMask
 
 Ganache
 
+IPFS
+
 
 ### Installing
 
