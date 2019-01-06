@@ -1,4 +1,4 @@
-NOTE: This was made with Truffle 4, so migrating the contract will bring about some errors if using Truffle 5. I have the updated version but still making some adjustments. If you want to have the updated version right now, please just let me know I can push the contracts that are compatable with the Truffle 5 version. 
+NOTE: Update was made so that contracts may migrate with Truffle 5 (rather than Truffle 4 as was previously done)
 
 # DAPP_IPFS_FileSharing
 Work in progress. DAPP uses IPFS for each account to store each file as an array. Images are used here for display.
@@ -24,7 +24,6 @@ After cloning repository, go into the client directory from the IPFS_DAPP direct
 ```
 git clone https://github.com/lukzhang/DAPP_IPFS_FileSharing.git
 cd DAPP_IPFS_FileSharing
-cd IPFS_DAPP
 cd client
 ```
 
@@ -37,15 +36,16 @@ from build/contracts to client/source/contracts
 truffle migrate --reset
 ```
 
-Because I refer to the first account from web3 as account[0], you must state via truffle to set the default account to this
+Because I refer to the first account from web3 as account[0], you must state via **truffle5** to set the default account to this
 
 ```
 truffle console
-web3.eth.defaultAccount = web3.eth.accounts[0]
+let accounts = await web3.eth.getAccounts()
+first = accounts[0]
+web3.eth.defaultAccount = first
 ```
 
-Finally run the server in the IPFS_DAPP/client directory. Metamask sometimes has issues when starting it, so try restarting Ganache and MetaMask and resetting the
-account in MetaMask.
+Finally run the server in the ./client directory. Metamask sometimes has issues when starting it, so try restarting MetaMask and resetting the account in MetaMask by going to custom RPC.
 
 ```
 npm run start
@@ -53,7 +53,7 @@ npm run start
 
 ### Functions
 
-You should be able to upload images for each account. You can view various images once you uploaded them by changing the index.
+You should be able to upload images for each account. You can view various images once you uploaded them by toggling the buttons
 
 
 ## Acknowledgments
