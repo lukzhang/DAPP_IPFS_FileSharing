@@ -1,0 +1,9 @@
+.App {
+  text-align: center;
+  background-color: lightblue;
+}
+
+#indexInput {
+  width: 3%;
+  height: 20%;
+}
