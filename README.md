@@ -27,10 +27,8 @@ cd DAPP_IPFS_FileSharing
 cd client
 ```
 
-If it is not open already, open up Ganache and browser with MetaMask that connects to the local blockchain network from ganache. 
-Migrate the contracts with --reset to be safe. Note, if you want to modify the contracts, you must navigate to the IPFS_DAPP
-directory and change the .sol files in the contracts directory. Migrate from IPFS_DAPP directory and copy the corresponding .json files
-from build/contracts to client/source/contracts
+If it is not open already, open up Ganache and browser with MetaMask. 
+Migrate the contracts with --reset to be safe. Note, if you want to modify the contracts, you must navigate to the root directory and change the .sol files in the contracts directory. Migrate from IPFS_DAPP directory and copy the corresponding .json files from build/contracts to client/source/contracts
 
 ```
 truffle migrate --reset
