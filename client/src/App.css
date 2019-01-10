@@ -1,9 +1,51 @@
+.titleBar {
+  background-color: #000;
+  display: block;
+  color: #fff;
+  paddingLeft: 16px;
+}
+
 .App {
   text-align: center;
   background-color: lightblue;
 }
 
-#indexInput {
-  width: 3%;
-  height: 20%;
+.container {
+  align-items: right;
+}
+
+#allAddresses {
+  float: right;
+  text-align: right;
+  padding-right: 80px;
+  font-size: 16px;
+}
+
+#searchComponent {
+  text-align: left;
+  padding-left: 10px;
+  padding-top: 5px;
+}
+
+#addressInput {
+    border: solid 1px #CCC;
+    height: 44px;
+    width: 570px;
+    font-size: 22px;
+    color: #999;
+    padding-left: 5px;
+    vertical-align: bottom
+}
+
+#addressButton {
+    border: solid 1px #CCC;
+    height: 37px;
+    width: 115px;
+    color: white;
+}
+
+#searchBar:before{
+    content:" ";
+    display:inline-block;
+    width:100px;
 }

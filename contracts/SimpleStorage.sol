@@ -15,15 +15,11 @@ contract SimpleStorage {
   mapping (address => Image) images;
   address[] public imageAccounts;
 
-  //Can we have one address with multiple images/files?
-
-  //************PRACTICISMO*****************
-
   struct Book {
     //Can use the length of array to find max index length for front end navigation
     string[] bookHash;
     string[] bookTitle;
-    string[] bookCoverHash;
+    string[] contents;
   }
 
 
@@ -32,15 +28,63 @@ contract SimpleStorage {
   address[] public bookAccounts;
 
 
-
-  function addBook(address _address, string memory _bookHash)public{
+  /* function addBook(address _address, string memory _bookHash)public{
     //var book = books[_address];
 
     books[_address].bookHash.push(_bookHash) -1; //Do I need the -1???
     //Add the title, and cover later...
 
+
+
     bookAccounts.push(_address) -1;
-  }
+  } */
+
+
+
+
+
+  //Function that imitates above, but adds the title and contents
+  function addBookReport(address _address, string memory _bookHash, string memory
+    _bookTitle, string memory _contents) public {
+
+      books[_address].bookHash.push(_bookHash) -1;    //This is the image
+      //Can we limit size of string???
+      books[_address].bookTitle.push(_bookTitle) -1;  //Should title also be stored via IPFS?
+      books[_address].contents.push(_contents) -1;  //Should contents be stored via IPFS?
+
+      //Iterate through array to check if address exists. If not, push to array.
+      bool bookAdded = false;
+      for(uint i=0; i<bookAccounts.length; i++){
+        if(bookAccounts[i] == _address){
+          bookAdded = true;
+          break;
+        }
+      }
+
+      if(!bookAdded){
+        bookAccounts.push(_address) -1;
+      }
+    }
+
+    //Return array of bookAccounts. In future, should partition array in cycles
+    //Reads from blockchain are free. Perhaps should just reed the public array..
+    function getBookAccounts() public view returns(address[] memory){
+      return bookAccounts;
+    }
+
+
+
+    function getTitle(address _address, uint i) view public returns(string memory){
+      return books[_address].bookTitle[i];
+    }
+
+    function getContents(address _address, uint i) view public returns(string memory){
+      return books[_address].contents[i];
+    }
+
+
+
+
 
   function getBook(address _address, uint i) view public returns(string memory){
     return books[_address].bookHash[i];
@@ -66,6 +110,7 @@ contract SimpleStorage {
   function getImages() view public returns(address[] memory) {
     return imageAccounts;
   }
+
 
   function getImage(address _address) view public returns(string memory){
     return images[_address].imageHash;
