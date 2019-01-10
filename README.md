@@ -34,7 +34,7 @@ Migrate the contracts with --reset to be safe. Note, if you want to modify the c
 truffle migrate --reset
 ```
 
-Because I refer to the first account from web3 as account[0], you must state via **truffle5** to set the default account to this. However, for me, I no longer need to do this. I had to essentially do this with truffle 4. I put this procedure just in case.
+Because I refer to the first account from web3 as account[0], you must state to set the default account to this. However, for me, I no longer need to do this. I had to essentially do this with truffle 4. I put this procedure just in case.
 
 ```
 truffle console
