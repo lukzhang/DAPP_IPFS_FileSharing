@@ -2,6 +2,8 @@ pragma solidity >=0.4.21 <0.6.0;
 //This is the solidity file to edit and use. You must migrate then copy the
 //relavent json file in build/contracts to the client folder. Copy into client/src/contracts directory
 
+import './MyToken.sol';
+
 contract SimpleStorage {
   string ipfsHash;
   string answerss = "QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ/cat.jpg";
@@ -22,10 +24,15 @@ contract SimpleStorage {
     string[] contents;
   }
 
+  //The ERC721 token
+  MyToken public myToken;
+  uint256 public tokenId;
 
 
   mapping (address => Book) books;
   address[] public bookAccounts;
+
+  
 
 
   /* function addBook(address _address, string memory _bookHash)public{
@@ -40,6 +47,30 @@ contract SimpleStorage {
   } */
 
 
+  constructor (MyToken _myToken) public {
+    myToken = _myToken;
+    tokenId=0;
+  }
+
+  function buyOneToken() public payable {
+    require(myToken.mint(msg.sender, tokenId));
+    tokenId++;
+  }
+
+  function accountBalance() view public returns(uint256){
+    return myToken.balanceOf(msg.sender);
+  }
+
+  //Checks balance of account that isn't msg.sender
+  function accountBalanceManual(address _address) view public returns(uint256){
+    return myToken.balanceOf(_address);
+  }
+
+  //Mints a token to another address
+  function giveLike(address _to) public payable{
+    require(myToken.mint(_to, tokenId));
+    tokenId++;
+  }
 
 
 

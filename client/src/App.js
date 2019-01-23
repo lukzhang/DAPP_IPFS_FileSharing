@@ -24,7 +24,9 @@ class App extends Component {
       rows: [],
       currTitle: '',
       lookupAddress: '',
-      allAddresses: []
+      allAddresses: [],
+      allLikes: [],
+      tokens: 0
     }
 
     this.captureFile = this.captureFile.bind(this);
@@ -34,6 +36,8 @@ class App extends Component {
     this.addIPFSItem = this.addIPFSItem.bind(this);
     this.showAccounts = this.showAccounts.bind(this);
     this.titleChangeHandler=this.titleChangeHandler.bind(this);
+    this.giveLike=this.giveLike.bind(this);
+    this.sendLike=this.sendLike.bind(this);
   }
 
 
@@ -100,7 +104,11 @@ componentWillMount() {
         return this.simpleStorageInstance.getLength(this.state.account);
       }).then((arrayLength) => {
 
-        return this.setState({arrayLength});
+        this.setState({arrayLength});
+
+        return this.simpleStorageInstance.accountBalanceManual(this.state.account);
+      }).then((numTokens)=>{
+        return this.setState({tokens: numTokens});
       })
     })
 
@@ -151,54 +159,6 @@ captureFile(event) {
 
 
 
-  // onSubmit(event) {
-  //   event.preventDefault();
-  //
-  //   ipfs.files.add(this.state.buffer, (error, result) => {
-  //
-  //     if(error){
-  //       console.error(error)
-  //       return
-  //     }
-  //
-  //     //*************THIS IS THE NEW FUNCTION IN CONTRACT*************
-  //     //ADDS TITLE AND CONTENTS
-  //     this.simpleStorageInstance.addBookReport(this.state.account, result[0].hash,
-  //       this.state.currTitle, "BLAH BLAH BLAH!!!",
-  //       { from: this.state.account }).then((r) => {
-  //       //Get the value from the contract to prove it worked
-  //       console.log("The new image setting");
-  //
-  //       //Update the length and then set the current index to that length-1
-  //       // this.setState({length: this.state.length+1});
-  //       // this.setState({index: this.state.length-1});
-  //
-  //       var currIndex = this.state.arrayLength;
-  //       console.log('index is ', currIndex);
-  //       //this.setState({index: currIndex.value()});
-  //
-  //       return;
-  //     }).then((r) => {
-  //       var prevLength = this.state.arrayLength;
-  //       this.instantiateContract();
-  //
-  //     }).then((r) =>{
-  //       //It is better to grab the hash directly from the blockchain, NOT our input
-  //       //return this.setState({ipfsHash: result[0].hash});
-  //
-  //       //Instead, refresh page/render?
-  //       window.location.reload();
-  //
-  //     })
-  //
-  //
-  //   })
-  //
-  //
-  // }
-
-
-
   async onSubmit(event) {
     event.preventDefault();
 
@@ -207,12 +167,6 @@ captureFile(event) {
 
     let hash1 = results[0].hash;
     let hash2 = second[0].hash;
-
-    // if(typeof contents !== "undefined" && typeof coverImage!=='undefined'){
-    //   let answer ={thePic: coverImage, theContents: contents}
-    //
-    //   console.log(answer)
-    // }
 
     let answer ={thePic: hash1, theContents: hash2}
 
@@ -260,6 +214,9 @@ captureFile(event) {
       console.log('ipfsHash is ', this.state.ipfsHash);
     }
 
+    //Account Like Tokens
+    var accountTokens = "You have " + this.state.tokens + " LIKE Tokens";
+
     //Shows customer their account
     var userAccount = "Your account is: " + this.state.account;
 
@@ -277,7 +234,9 @@ captureFile(event) {
         <table className="titleBar">
         <tbody>
 
-          <h1>Interactive News</h1>
+          <h1 className='theHeading'>Interactive News</h1>
+          <p id='descHeading'>
+            Articles stored on IPFS and the blockchain</p>
         </tbody>
 
         </table>
@@ -290,11 +249,8 @@ captureFile(event) {
         <button onClick={this.addIPFSItem}
           className="btn btn-info btn-sm m-1" id='addressButton'>Show Articles</button>
 
-        <span id='searchBar'/>
-          <button onClick={this.showAccounts}
-            className="btn btn-success btn-sm m-1"
-            style={{marginTop: 10, padding: 10, paddingLeft: 120, paddingRight: 120}}>
-            Show All Articles</button>
+        <button onClick={this.sendLike}
+            className="btn btn-success btn-sm m-1" id='addressButton'>Send a LIKE</button>
 
         <span id='searchBar'/>
           <button onClick={this.showAccounts}
@@ -304,10 +260,20 @@ captureFile(event) {
         </div>
 
         <br/>
+          <font size="5">
+          <span className="badge badge-info" dangerouslySetInnerHTML={{__html: userAccount}} />
+          </font>
         <br/>
         <br/>
 
+          <button onClick={this.giveLike}
+            className="btn btn-primary btn-sm m-1"
+            style={{marginTop: 10, padding: 10, paddingLeft: 120, paddingRight: 120}}>
+            Buy a LIKE Token</button>
 
+          <font size="5">
+        <span className="badge badge-info" dangerouslySetInnerHTML={{__html: accountTokens}} />
+        </font>
 
         {/*Gives a row of tables of IPFS items*/}
         <ul>
@@ -348,8 +314,11 @@ captureFile(event) {
                   <tr key={index}>
                     <td>
                     <p>{allAddresses}</p>
-
                     </td>
+                    <p>
+                      <span className="badge badge-primary" dangerouslySetInnerHTML=
+                        {{__html: this.state.allLikes[index] + " likes"}} />
+                    </p>
                   </tr>
                 </table>
 
@@ -368,27 +337,31 @@ captureFile(event) {
         <main className="container">
           <div className="pure-g">
             <div className="pure-u-1-1">
-              <h2>Your image, title, and contents are stored via IPFS on blockchain</h2>
-              <br />
 
               {/*<div className="content" dangerouslySetInnerHTML={{__html: userAccount}}></div>*/}
               <font size="5">
-              <span className="badge badge-info" dangerouslySetInnerHTML={{__html: userAccount}} />
+
+
 
 
               <br />
               <br />
+                <br />
+                <br />
+
+                <h1>Submit an Article Below</h1>
 
               {/*<div className="content" dangerouslySetInnerHTML={{__html: currIPFS}}></div>*/}
+
               <span className="badge badge-light" dangerouslySetInnerHTML={{__html: currIPFS}} />
 
-              <br />
               </font>
 
               <br />
               <br />
               <br />
               <br />
+              <h3>Your Article Cover Photos</h3>
 
               <button onClick={this.handleFirst}
               className="btn btn-info btn-sm m-1">First</button>
@@ -497,6 +470,27 @@ captureFile(event) {
     this.setState({currTitle: title})
   }
 
+  async giveLike() {
+    console.log("like");
+    const contract = require('truffle-contract')
+    const simpleStorage = contract(SimpleStorageContract)
+    simpleStorage.setProvider(this.state.web3.currentProvider)
+
+    await this.simpleStorageInstance.buyOneToken({from: this.state.account});
+    let numTokens = await this.simpleStorageInstance.accountBalance();
+    this.setState({tokens: numTokens})
+  }
+
+  async sendLike() {
+    console.log("Send like");
+    const contract = require('truffle-contract')
+    const simpleStorage = contract(SimpleStorageContract)
+    simpleStorage.setProvider(this.state.web3.currentProvider)
+
+    await this.simpleStorageInstance.giveLike(this.state.lookupAddress,
+      {from: this.state.account});
+  }
+
 
   async showAccounts() {
     console.log("SHOW ACCOUNTS");
@@ -506,9 +500,20 @@ captureFile(event) {
 
     var allAddresses = await this.simpleStorageInstance.getBookAccounts();
 
+    var likes=[];
+
     for(var i=0; i<allAddresses.length; i++){
       console.log('The address is ', allAddresses[i])
+
+      let currBalance =
+        await this.simpleStorageInstance.accountBalanceManual(allAddresses[i]);
+
+        console.log('Likes is ', currBalance.toNumber())
+
+        likes.push(currBalance.toNumber())
     }
+
+    this.setState({allLikes: likes})
 
     return this.setState({allAddresses: allAddresses})
   }

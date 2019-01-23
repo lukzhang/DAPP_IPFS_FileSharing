@@ -1,3 +1,14 @@
+.theHeading {
+  padding: 0px;
+  margin-bottom: 0;
+  margin-top: 5px;
+  margin-left: 10px;
+}
+
+#descHeading {
+  margin-left: 10px;
+}
+
 .titleBar {
   background-color: #000;
   display: block;
