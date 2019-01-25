@@ -4,59 +4,50 @@ pragma solidity >=0.4.21 <0.6.0;
 
 import './MyToken.sol';
 
+/*
+Storage that contains articles where IPFS stores contents and cover photo
+IPFS hash values are stored in the array within the structs. Titles are directly
+stored as a string within the array in the struct
+
+Note: struct 'Book' actually refers to article, as do its couterparts such as
+bookHash, bookTitle, etc.
+*/
+
 contract SimpleStorage {
-  string ipfsHash;
-  string answerss = "QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ/cat.jpg";
 
-  struct Image {
-    string imageHash;   //Can we check if this is an img file?
-    string title;
-    string coverHash;   //Change this to contentsHash?
-  }
-
-  mapping (address => Image) images;
-  address[] public imageAccounts;
-
+  //Contains an article including a cover image, title, and contents. Each is stored
+  //in an array as each user can have more than one article
   struct Book {
     //Can use the length of array to find max index length for front end navigation
-    string[] bookHash;
-    string[] bookTitle;
-    string[] contents;
+    string[] bookHash;    //Cover photo
+    string[] bookTitle;   //Title of article
+    string[] contents;    //Contents of article
   }
 
   //The ERC721 token
-  MyToken public myToken;
-  uint256 public tokenId;
+  MyToken public myToken;  //Instance of token
+  uint256 public tokenId;  //Id of token that is to be minted
 
-
+  //Maps the user's address to their articles
   mapping (address => Book) books;
+
+  //Contains each users' account who has submitted an article
   address[] public bookAccounts;
 
-  
-
-
-  /* function addBook(address _address, string memory _bookHash)public{
-    //var book = books[_address];
-
-    books[_address].bookHash.push(_bookHash) -1; //Do I need the -1???
-    //Add the title, and cover later...
-
-
-
-    bookAccounts.push(_address) -1;
-  } */
-
-
+  //Initializes the contract by instatiating the token and setting the index
+  //to 0 for the token ID for minting
   constructor (MyToken _myToken) public {
     myToken = _myToken;
     tokenId=0;
   }
 
+  //User buys one token for themselves
   function buyOneToken() public payable {
     require(myToken.mint(msg.sender, tokenId));
     tokenId++;
   }
 
+  //Returns the amount of tokens user has
   function accountBalance() view public returns(uint256){
     return myToken.balanceOf(msg.sender);
   }
@@ -72,16 +63,14 @@ contract SimpleStorage {
     tokenId++;
   }
 
-
-
-  //Function that imitates above, but adds the title and contents
+  //Function that adds article
   function addBookReport(address _address, string memory _bookHash, string memory
     _bookTitle, string memory _contents) public {
 
-      books[_address].bookHash.push(_bookHash) -1;    //This is the image
-      //Can we limit size of string???
-      books[_address].bookTitle.push(_bookTitle) -1;  //Should title also be stored via IPFS?
-      books[_address].contents.push(_contents) -1;  //Should contents be stored via IPFS?
+      //Adds the cover photo, title, and contents
+      books[_address].bookHash.push(_bookHash) -1;
+      books[_address].bookTitle.push(_bookTitle) -1;
+      books[_address].contents.push(_contents) -1;
 
       //Iterate through array to check if address exists. If not, push to array.
       bool bookAdded = false;
@@ -103,62 +92,24 @@ contract SimpleStorage {
       return bookAccounts;
     }
 
-
-
+    //Title of article
     function getTitle(address _address, uint i) view public returns(string memory){
       return books[_address].bookTitle[i];
     }
 
+    //Article contents
     function getContents(address _address, uint i) view public returns(string memory){
       return books[_address].contents[i];
     }
 
+    //Article based on user address and index
+    function getBook(address _address, uint i) view public returns(string memory){
+      return books[_address].bookHash[i];
+    }
 
+    //Get length of bookHash array. Used for frontend navigation between all the files
+    function getLength(address _address) view public returns(uint256){
+      return books[_address].bookHash.length;
+    }
 
-
-
-  function getBook(address _address, uint i) view public returns(string memory){
-    return books[_address].bookHash[i];
-  }
-
-  //Get length of bookHash array. Used for frontend navigation between all the files
-  function getLength(address _address) view public returns(uint256){
-    return books[_address].bookHash.length;
-  }
-
-
-  //****************************************
-
-
-  function setImage(address _address, string memory _imageHash) public {
-    //var image = images[_address];
-
-    images[_address].imageHash = _imageHash;
-
-    imageAccounts.push(_address) -1;
-  }
-
-  function getImages() view public returns(address[] memory) {
-    return imageAccounts;
-  }
-
-
-  function getImage(address _address) view public returns(string memory){
-    return images[_address].imageHash;
-  }
-
-  function set(string memory x) public {
-    ipfsHash = x;
-    //ipfsHash = "QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ/cat.jpg";
-  }
-
-  function get() public view returns (string memory) {
-
-    return ipfsHash;
-  }
-
-  function getTest() public view returns (string memory) {
-
-    return answerss;
-  }
 }

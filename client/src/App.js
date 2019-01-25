@@ -53,7 +53,6 @@ componentWillMount() {
 
       // Instantiate contract once web3 provided.
       this.instantiateContract();
-
     })
     .catch(() => {
       console.log('Error finding web3.')
@@ -62,25 +61,14 @@ componentWillMount() {
 
 
 
-
-
-
-
-
  instantiateContract() {
-    /*
-     * SMART CONTRACT EXAMPLE
-     *
-     * Normally these functions would be called in the context of a
-     * state management library, but for convenience I've placed them here.
-     */
 
-
+    //Instance of SimpleStorage contract
     const contract = require('truffle-contract')
     const simpleStorage = contract(SimpleStorageContract)
     simpleStorage.setProvider(this.state.web3.currentProvider)
 
-
+    //Retrieves the accounts
     this.state.web3.eth.getAccounts((error, accounts) => {
       simpleStorage.deployed().then((instance) => {
         this.simpleStorageInstance = instance
@@ -111,10 +99,7 @@ componentWillMount() {
         return this.setState({tokens: numTokens});
       })
     })
-
   }
-
-
 
 
 captureFile(event) {
@@ -156,7 +141,6 @@ captureFile(event) {
 
     this.instantiateContract();
   }
-
 
 
   async onSubmit(event) {
@@ -552,9 +536,6 @@ async addIPFSItem () {
   return this.setState({rows: finalItems})
 
   }
-
-
-
 
 
 

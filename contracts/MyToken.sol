@@ -3,6 +3,10 @@ pragma solidity >=0.4.21 <0.6.0;
 import 'openzeppelin-solidity/contracts/token/ERC721/ERC721Full.sol';
 import 'openzeppelin-solidity/contracts/token/ERC721/ERC721Mintable.sol';
 
+/*
+Creates a Like token to be given to accounts
+*/
+
 contract MyToken is ERC721Full, ERC721Mintable{
 
   string name;
@@ -17,6 +21,7 @@ contract MyToken is ERC721Full, ERC721Mintable{
       /*
 
       After deploying contract, make sure to addMinter() by passing in SimpleStorage address
+      MyToken is intially the only minter. Only minters can add minters
 
       */
 
