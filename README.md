@@ -1,7 +1,7 @@
 NOTE: Update was made so that contracts may migrate with Truffle 5 (rather than Truffle 4 as was previously done)
 
 # DAPP_IPFS_FileSharing
-Work in progress. DAPP uses IPFS for each account to store each file as an array. Images are used here for display.
+DAPP uses IPFS for each account to store each file as an array. Images are used here for display.
 
 
 ### Prerequisites
