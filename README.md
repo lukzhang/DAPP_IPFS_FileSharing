@@ -43,6 +43,16 @@ first = accounts[0]
 web3.eth.defaultAccount = first
 ```
 
+To make the minting function for the ERC721 token work, add the contract that calls upon the token as a minter. In this case, MyToken contract needs to add SimpleStorage address as a minter
+
+```
+truffle console
+SimpleStorage.deployed().then((instance)=>{app=instance})
+MyToken.deployed().then((instance)=>{tok=instance})
+tok.addMinter(app.address)
+```
+
+
 Finally run the server in the ./client directory. Metamask sometimes has issues when starting it, so try restarting MetaMask and resetting the account in MetaMask by going to custom RPC.
 
 ```
