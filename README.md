@@ -4,7 +4,7 @@ Click here to access: https://vibrant-hermann-529868.netlify.com/
 
 To use the DAPP, make sure you have a Rinkeby account with some (fake) Ether. 
 
-Some files may not appear since the node hosting the file on IPFS isn't currently running. 
+You will need to download IPFS `npm install -g IPFS-api`
 
 
 NOTE: Update was made so that contracts may migrate with Truffle 5 (rather than Truffle 4 as was previously done)
