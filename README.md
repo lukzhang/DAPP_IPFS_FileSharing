@@ -65,6 +65,7 @@ tok.addMinter(app.address)
 Finally run the server in the ./client directory. Metamask sometimes has issues when starting it, so try restarting MetaMask and resetting the account in MetaMask by going to custom RPC.
 
 ```
+npm install
 npm run start
 ```
 
