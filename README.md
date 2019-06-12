@@ -1,7 +1,7 @@
 # DAPP on Rinkeby
 
 
->>>> Click here to access: https://vibrant-hermann-529868.netlify.com/ <<<<<
+Click here to access: https://vibrant-hermann-529868.netlify.com/ 
 
 
 To use the DAPP, make sure you have a Rinkeby account with some (fake) Ether. 
