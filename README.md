@@ -1,6 +1,8 @@
 # DAPP on Rinkeby
 
-Click here to access: https://vibrant-hermann-529868.netlify.com/
+
+>>>> Click here to access: https://vibrant-hermann-529868.netlify.com/ <<<<<
+
 
 To use the DAPP, make sure you have a Rinkeby account with some (fake) Ether. 
 
@@ -8,6 +10,9 @@ You will need to download IPFS `npm install -g IPFS-api`
 
 
 NOTE: Update was made so that contracts may migrate with Truffle 5 (rather than Truffle 4 as was previously done)
+
+NOTE: As with IPFS, it works best when viewing files coming from your computer as there is no incentive for other nodes to host your file until Filecoin becomes live.
+
 
 # DAPP_IPFS_FileSharing
 DAPP uses IPFS for each account to store each file as an array. Images are used here for display.
