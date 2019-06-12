@@ -1,4 +1,4 @@
-pragma solidity >=0.4.21 <0.6.0;
+pragma solidity >=0.4.21 <0.5.0;
 //This is the solidity file to edit and use. You must migrate then copy the
 //relavent json file in build/contracts to the client folder. Copy into client/src/contracts directory
 
