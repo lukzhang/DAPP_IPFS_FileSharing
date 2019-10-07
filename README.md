@@ -1,12 +1,14 @@
 # DAPP on Rinkeby
 
 
-Click here to access: https://vibrant-hermann-529868.netlify.com/ 
+:link: Click here to access: https://vibrant-hermann-529868.netlify.com/ 
 
 
-To use the DAPP, make sure you have a Rinkeby account with some (fake) Ether. 
 
-You will need to download IPFS `npm install -g IPFS-api`
+To use the DAPP, make sure you have a Rinkeby account with some (fake) Ether :moneybag:. 
+
+You will need to download IPFS `npm install -g IPFS-api` :floppy_disk:
+
 
 
 NOTE: Update was made so that contracts may migrate with Truffle 5 (rather than Truffle 4 as was previously done)
